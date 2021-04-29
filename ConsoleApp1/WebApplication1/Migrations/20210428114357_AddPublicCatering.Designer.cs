@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApplication1.EfStuff;
 
 namespace WebApplication1.Migrations
 {
     [DbContext(typeof(KzDbContext))]
-    partial class KzDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210428114357_AddPublicCatering")]
+    partial class AddPublicCatering
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,35 +49,6 @@ namespace WebApplication1.Migrations
                     b.HasIndex("StudentsId");
 
                     b.ToTable("CertificateStudent");
-                });
-
-            modelBuilder.Entity("WebApplication1.EfStuff.Model.AdminResto", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<long>("CitizenId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("LoginAdmin")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PasswordAdmin")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long?>("RestoranId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CitizenId")
-                        .IsUnique();
-
-                    b.HasIndex("RestoranId");
-
-                    b.ToTable("AdminResto");
                 });
 
             modelBuilder.Entity("WebApplication1.EfStuff.Model.Adress", b =>
@@ -805,23 +778,6 @@ namespace WebApplication1.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("WebApplication1.EfStuff.Model.AdminResto", b =>
-                {
-                    b.HasOne("WebApplication1.EfStuff.Model.Citizen", "Citizen")
-                        .WithOne("AdminResto")
-                        .HasForeignKey("WebApplication1.EfStuff.Model.AdminResto", "CitizenId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("WebApplication1.EfStuff.Model.Restorans", "Restoran")
-                        .WithMany("AdminResto")
-                        .HasForeignKey("RestoranId");
-
-                    b.Navigation("Citizen");
-
-                    b.Navigation("Restoran");
-                });
-
             modelBuilder.Entity("WebApplication1.EfStuff.Model.BronResto", b =>
                 {
                     b.HasOne("WebApplication1.EfStuff.Model.Restorans", "Restoranses")
@@ -956,8 +912,6 @@ namespace WebApplication1.Migrations
 
             modelBuilder.Entity("WebApplication1.EfStuff.Model.Citizen", b =>
                 {
-                    b.Navigation("AdminResto");
-
                     b.Navigation("Fireman");
 
                     b.Navigation("PoliceAcademy");
@@ -978,8 +932,6 @@ namespace WebApplication1.Migrations
 
             modelBuilder.Entity("WebApplication1.EfStuff.Model.Restorans", b =>
                 {
-                    b.Navigation("AdminResto");
-
                     b.Navigation("Brons");
                 });
 
